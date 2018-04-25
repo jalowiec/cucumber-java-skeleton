@@ -10,6 +10,7 @@ public class HotelManager {
 	private List<Room> roomList = new ArrayList<>();
 	private List<Person> personList = new ArrayList<>();
 	private Set<Booking> bookingList = new TreeSet<>();
+	
 
 	public void addRoom() {
 		Room addedRoom = new Room();
@@ -22,6 +23,8 @@ public class HotelManager {
 
 	public void bookingRoom(Person bookingPerson, Room bookingRoom) {
 		bookingRoom.setBooked();
+		Operation operation = new Operation(RoomOperation.Reservation, bookingPerson);
+		bookingRoom.roomOperations.add(operation);
 		Booking booking = new Booking(bookingPerson, bookingRoom);
 		bookingList.add(booking);
 
@@ -29,11 +32,30 @@ public class HotelManager {
 
 	public void cancelBooking(Person cancelingPerson, Booking booking) {
 		booking.getBookingRoom().setFree();
+		Operation operation = new Operation(RoomOperation.Cancellation, booking.getBookingPerson());
+		booking.getBookingRoom().roomOperations.add(operation);
 		bookingList.remove(booking);
 
 	}
-	
+
+	public void cancelBooking(Person cancelingPerson, Room room) {
+		room.setFree();
+		for(Booking booking : bookingList ) {
+			if(booking.getBookingRoom().equals(room)) {
+				bookingList.remove(booking);
+			}
+		}
+		
+	}
+
 	public void showBookings() {
+		for(Booking booking : bookingList) {
+			System.out.println(booking.getBookingPerson().getPersonId());
+		}
+
+	}
+	
+	public void showHistory(Room room) {
 		for(Booking booking : bookingList) {
 			System.out.println(booking.getBookingPerson().getPersonId());
 		}
