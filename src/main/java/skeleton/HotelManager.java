@@ -29,6 +29,9 @@ package skeleton;
 			//TODO - obs³uga podwojnego dodawania osoby
 		}
 		
+		
+
+		
 //		public void addToHistory(RoomCommand command) {
 //			history.add(command);
 ///		}

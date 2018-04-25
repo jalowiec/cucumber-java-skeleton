@@ -24,14 +24,14 @@ public class Room {
 
 
 	}
-
+		
 
 
 	public RoomState getState() {
 		return state;
 	}
 	
-	public boolean canBeBooked() {
+	public boolean isFree() {
 		
 		if(this.state instanceof RoomFree){
 			return true;
@@ -39,5 +39,6 @@ public class Room {
 	
 		return false;
 	}
+	
 
 }

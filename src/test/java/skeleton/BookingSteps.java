@@ -33,6 +33,6 @@ public class BookingSteps {
 	
 	@And("^it can no longer be booked")
 	public void it_can_no_longer_be_booked(Room room) {
-		assertFalse(room.canBeBooked());
+		assertFalse(room.isFree());
 	}
 }
