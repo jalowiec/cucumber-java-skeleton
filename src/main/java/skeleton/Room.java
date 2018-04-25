@@ -18,14 +18,19 @@ public class Room {
 
 	}
 
-	public void setBooked(int bookingPersonId) {
+	public void setBooked() {
 
-		this.state = new RoomBooked(bookingPersonId);
-
-
+		this.state = new RoomBooked();
+		
+		
 	}
+	
 		
 
+
+	public int getRoomNumber() {
+		return roomNumber;
+	}
 
 	public RoomState getState() {
 		return state;
@@ -37,8 +42,11 @@ public class Room {
 			return true;
 		}
 	
-		return false;
+		return false; 
+		
+		
 	}
+
 	
 
 }

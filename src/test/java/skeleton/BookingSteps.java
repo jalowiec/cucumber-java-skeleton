@@ -21,13 +21,13 @@ public class BookingSteps {
 	}
 
 	@When("^person (\\d+) books it$")
-	public void person_A_books_it(int personId) {
-		hotel.getAddedRoom().setBooked(personId);	
+	public void person_A_books_it(Person bookingPerson, Room bookingRoom) {
+		hotel.bookingRoom(bookingPerson, bookingRoom);	
 	}
 
 	@Then("^it is booked by person (\\d+)$")
-	public void it_is_booked_by_personA(int bookingPersonId, RoomBooked roomBooked) {
-		assertEquals(bookingPersonId, roomBooked.getBookingPerson() );
+	public void it_is_booked_by_personA(Person bookingPerson, Booking booking) {
+		assertEquals(bookingPerson, booking.getBookingPerson() );
 	}
 
 	

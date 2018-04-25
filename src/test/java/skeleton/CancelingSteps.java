@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import cucumber.api.java.en.And;
+
 
 public class CancelingSteps {
 
@@ -16,15 +16,15 @@ public class CancelingSteps {
 	HotelManager hotel = new HotelManager();
 	
 
-	@Given("^person (\\d+) has a booking $")
-	public void person_A_has_a_booking(int personId) {
+	@Given("^person (\\d+) has a booking$")
+	public void person_A_has_a_booking(Person bookingPerson, Room bookingRoom) {
 		hotel.addRoom();
-		hotel.getAddedRoom().setBooked(personId);
+		hotel.bookingRoom(bookingPerson, bookingRoom);
 	}
 
 	@When("^he cancels his booking$")
-	public void he_cancels_his_booking() {
-		hotel.getAddedRoom().setFree();
+	public void he_cancels_his_booking(Person cancelingPerson, Booking booking) {
+		hotel.cancelBooking(cancelingPerson, booking);
 		
 	}
 
