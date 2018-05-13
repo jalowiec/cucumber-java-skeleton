@@ -1,10 +1,12 @@
 Feature: Reservation System 
 
+Background:
+	Given there is a free room
+
 Scenario: book free room 
-	Given there is a free room 
-	When person 1 books it 
+ 	When person 1 books it 
 	Then it is booked by person 1 
-	And it can no longer be booked 
+	And it can no longer be booked
 	
 Scenario: cancel booking 
 	Given person 1 has a booking 
@@ -22,12 +24,16 @@ Scenario: print booking history for a room
 	Then the list of historical bookings displays names of people booking and time the booking was made or canceled	
 	
 Scenario: Locking room for booking
-	Given there is a free room
 	When a person begins to book that room
-	Then the room becomes unavailable	
-	
+	Then the room becomes unavailable		
+
 Scenario: Releasing booking lock if no booking made
 	Given a person started booking
 	When 10 minutes elapses and the booking is still not complete
 	Then the room becomes available again
-	And person A cannot complete booking	
+	And person A cannot complete booking
+	
+
+
+	
+	
