@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = {
-		"pretty", "io.cucumber.pro.JsonReporter:all"},
+@CucumberOptions(
+//		plugin = {		"pretty", "io.cucumber.pro.JsonReporter:all"},
 		features = "src/test/resources/skeleton"
 			)
 public class RunCukesTest {
