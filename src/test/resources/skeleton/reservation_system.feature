@@ -21,4 +21,13 @@ Scenario: print booking history for a room
 	When a booking history is printed 
 	Then the list of historical bookings displays names of people booking and time the booking was made or canceled	
 	
+Scenario: Locking room for booking
+	Given there is a free room
+	When a person begins to book that room
+	Then the room becomes unavailable	
 	
+Scenario: Releasing booking lock if no booking made
+	Given a person started booking
+	When 10 minutes elapses and the booking is still not complete
+	Then the room becomes available again
+	And person A cannot complete booking	
