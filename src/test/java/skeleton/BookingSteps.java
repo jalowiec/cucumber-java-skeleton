@@ -20,12 +20,12 @@ public class BookingSteps {
 		hotel.addRoom();
 	}
 
-	@When("^person (\\d+) books it$")
+	@When("^person A books it$")
 	public void person_A_books_it(Person bookingPerson, Room bookingRoom) {
 		hotel.bookingRoom(bookingPerson, bookingRoom);	
 	}
 
-	@Then("^it is booked by person (\\d+)$")
+	@Then("^it is booked by person A$")
 	public void it_is_booked_by_personA(Person bookingPerson, Booking booking) {
 		assertEquals(bookingPerson, booking.getBookingPerson() );
 	}

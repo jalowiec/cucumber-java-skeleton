@@ -29,6 +29,13 @@ public class Room {
 		
 	}
 	
+	public void setLocked() {
+
+		this.state = new RoomLocked();
+		
+		
+	}
+	
 		
 
 

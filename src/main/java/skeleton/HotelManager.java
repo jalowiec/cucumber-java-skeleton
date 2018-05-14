@@ -20,7 +20,27 @@ public class HotelManager {
 	public Room getAddedRoom() {
 		return roomList.get(roomList.size() - 1);
 	}
+	
+	public Room getFreeRoom() {
+		for(Room room : roomList) {
+			if(room.getState() instanceof RoomFree) {
+				return room;
+			}
+		} return null;
+		
+	}
+	// TO DO - obsluzyc sytuacje jak nie bedzie wolnego pokoju
 
+	public void bookingAddedRoom(Person bookingPerson) {
+		Room bookingRoom = getAddedRoom();
+		bookingRoom.setBooked();
+		Operation operation = new Operation(RoomOperation.Reservation, bookingPerson);
+		bookingRoom.roomOperations.add(operation);
+		Booking booking = new Booking(bookingPerson, bookingRoom);
+		bookingList.add(booking);
+
+	}
+	
 	public void bookingRoom(Person bookingPerson, Room bookingRoom) {
 		bookingRoom.setBooked();
 		Operation operation = new Operation(RoomOperation.Reservation, bookingPerson);

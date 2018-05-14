@@ -16,10 +16,10 @@ public class CancelingSteps {
 	HotelManager hotel = new HotelManager();
 	
 
-	@Given("^person (\\d+) has a booking$")
-	public void person_A_has_a_booking(Person bookingPerson, Room bookingRoom) {
+	@Given("^person A has a booking$")
+	public void person_A_has_a_booking(Person bookingPerson) {
 		hotel.addRoom();
-		hotel.bookingRoom(bookingPerson, bookingRoom);
+		hotel.bookingAddedRoom(bookingPerson);
 	}
 
 	@When("^he cancels his booking$")
