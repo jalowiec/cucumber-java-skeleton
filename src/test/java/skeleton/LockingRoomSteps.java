@@ -23,8 +23,8 @@ public class LockingRoomSteps {
 	public void a_person_begins_to_book_that_room() {
 		hotel.addRoom();
 		lockingRoom = hotel.getFreeRoom();
-	    lockingRoom.setLocked();
-	    
+	    hotel.lockingRoom(lockingRoom);
+	   
 	}
 
 	@Then("^the room becomes unavailable$")

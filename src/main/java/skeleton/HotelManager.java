@@ -1,6 +1,7 @@
 package skeleton;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -8,9 +9,9 @@ import java.util.TreeSet;
 public class HotelManager {
 
 	private List<Room> roomList = new ArrayList<>();
+	private List<Room> lockedRooms = new ArrayList<>();
 	private List<Person> personList = new ArrayList<>();
 	private Set<Booking> bookingList = new TreeSet<>();
-	
 
 	public void addRoom() {
 		Room addedRoom = new Room();
@@ -20,14 +21,15 @@ public class HotelManager {
 	public Room getAddedRoom() {
 		return roomList.get(roomList.size() - 1);
 	}
-	
+
 	public Room getFreeRoom() {
-		for(Room room : roomList) {
-			if(room.getState() instanceof RoomFree) {
+		for (Room room : roomList) {
+			if (room.getState() instanceof RoomFree) {
 				return room;
 			}
-		} return null;
-		
+		}
+		return null;
+
 	}
 	// TO DO - obsluzyc sytuacje jak nie bedzie wolnego pokoju
 
@@ -40,7 +42,7 @@ public class HotelManager {
 		bookingList.add(booking);
 
 	}
-	
+
 	public void bookingRoom(Person bookingPerson, Room bookingRoom) {
 		bookingRoom.setBooked();
 		Operation operation = new Operation(RoomOperation.Reservation, bookingPerson);
@@ -60,23 +62,29 @@ public class HotelManager {
 
 	public void cancelBooking(Person cancelingPerson, Room room) {
 		room.setFree();
-		for(Booking booking : bookingList ) {
-			if(booking.getBookingRoom().equals(room)) {
+		for (Booking booking : bookingList) {
+			if (booking.getBookingRoom().equals(room)) {
 				bookingList.remove(booking);
 			}
 		}
-		
+
+	}
+
+	public void lockingRoom(Room room) {
+		room.setLocked();
+		lockedRooms.add(room);
+
 	}
 
 	public void showBookings() {
-		for(Booking booking : bookingList) {
+		for (Booking booking : bookingList) {
 			System.out.println(booking.getBookingPerson().getPersonId());
 		}
 
 	}
-	
+
 	public void showHistory(Room room) {
-		for(Booking booking : bookingList) {
+		for (Booking booking : bookingList) {
 			System.out.println(booking.getBookingPerson().getPersonId());
 		}
 
@@ -85,6 +93,21 @@ public class HotelManager {
 	public void addPerson(int personId, String personName, String personSurname) {
 		personList.add(new Person(personId, personName, personSurname));
 		// TODO - obs³uga podwojnego dodawania osoby
+	}
+
+	public void cancelingLockedRooms(int minutesAfterLock) {
+
+	
+		for (Room room : lockedRooms) {
+			if (room.getState() instanceof RoomLocked) {
+				RoomLocked roomLocked = (RoomLocked) room.getState();
+				if (new Date().getTime() - roomLocked.getLockDate().getTime() > minutesAfterLock * 60000) {
+					System.out.println("kasowanie");
+				}
+
+			}
+
+		}
 	}
 
 	// public void addToHistory(RoomCommand command) {

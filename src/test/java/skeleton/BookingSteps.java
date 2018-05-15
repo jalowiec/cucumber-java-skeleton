@@ -14,6 +14,7 @@ public class BookingSteps {
 	
 	HotelManager hotel = new HotelManager();
 	
+	
 
 	@Given("^there is a free room$")
 	public void there_is_a_free_room() {

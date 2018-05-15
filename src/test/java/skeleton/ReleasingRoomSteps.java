@@ -10,22 +10,24 @@ import static org.junit.Assert.assertFalse;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 
-public class RealeasingRoomSteps {
+public class ReleasingRoomSteps {
 
 	
 	HotelManager hotel = new HotelManager();
+	Room room;
 	
 
 	@Given("^a person started booking$")
 	public void a_person_started_booking() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+		hotel.addRoom();
+		room = hotel.getFreeRoom();
+		hotel.lockingRoom(room);
+		
 	}
 
 	@When("^(\\d+) minutes elapses and the booking is still not complete$")
 	public void minutes_elapses_and_the_booking_is_still_not_complete(int arg1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    hotel.cancelingLockedRooms(arg1); 
 	}
 
 	@Then("^the room becomes available again$")
