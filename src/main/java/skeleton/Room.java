@@ -57,6 +57,17 @@ public class Room {
 		
 		
 	}
+	
+	public boolean isLocked() {
+		
+		if(this.state instanceof RoomLocked){
+			return true;
+		}
+	
+		return false; 
+		
+		
+	}
 
 	
 

@@ -102,7 +102,7 @@ public class HotelManager {
 			if (room.getState() instanceof RoomLocked) {
 				RoomLocked roomLocked = (RoomLocked) room.getState();
 				if (new Date().getTime() - roomLocked.getLockDate().getTime() > minutesAfterLock * 60000) {
-					System.out.println("kasowanie");
+					room.setFree();
 				}
 
 			}

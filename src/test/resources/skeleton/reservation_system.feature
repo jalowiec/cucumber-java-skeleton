@@ -20,7 +20,7 @@ Scenario: print booking history for a room
 
 Scenario: Releasing booking lock if no booking made
 	Given a person started booking
-	When 10 minutes elapses and the booking is still not complete
+	When 0 minutes elapses and the booking is still not complete
 	Then the room becomes available again
 	And person A cannot complete booking
 	
