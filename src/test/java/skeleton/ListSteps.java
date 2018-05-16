@@ -16,29 +16,39 @@ public class ListSteps {
 
 	
 	HotelManager hotel = new HotelManager();
+	List<Room> roomList;
 	
 
 	@Given("there are a list of rooms with some bookings made")
-	public void there_are_a_list_of_rooms_with_some_bookings_made(Person bookingPerson) {
+	public void there_are_a_list_of_rooms_with_some_bookings_made() {
 		hotel.addRoom();
-	//	hotel.bookingRoom(bookingPerson, hotel.getAddedRoom());
+		Room room = hotel.getFreeRoom();
+		hotel.bookingRoom(100, new Person(2, "Tadeusz", "Nowak"), room);
+		
+		hotel.addRoom();
+		room = hotel.getFreeRoom();
+		hotel.bookingRoom(101, new Person(3, "Robert", "Lewandowski"), room);
+		
 		hotel.addRoom();
 		hotel.addRoom();
-	//	hotel.bookingRoom(bookingPerson, hotel.getAddedRoom());
 		
 	}
 
 	@When("^the list of bookings is displayed$")
 	public void the_list_of_bookings_is_displayed() {
-		hotel.showBookings();
+		roomList = hotel.getRoomList();
+		// COS WIECEJ?
 		
 	}
+	@Then("^each room points to a person booking it or is available$")
+	public void each_room_points_to_a_person_booking_it_or_is_available() {
+		
+		// TU NIE WIEM CO
 	
-	@Then("^the list of historical bookings displays names of people booking and time the booking was made or canceled$")
-	public void the_list_of_historical_bookings_displays_names_and_time(Person bookingPerson) {
-		
 		
 	}
+
+	
 
 	
 

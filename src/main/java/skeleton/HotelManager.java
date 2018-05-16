@@ -92,7 +92,7 @@ public class HotelManager {
 
 	public void showBookings() {
 		for (Booking booking : bookingList) {
-			System.out.println(booking.getBookingPerson().getPersonId());
+			System.out.println(booking.getBookingPerson().getPersonId() + ", " + booking.getBookingPerson().getPersonName() + ", " + booking.getBookingPerson().getPersonSurname());
 		}
 
 	}
@@ -125,6 +125,10 @@ public class HotelManager {
 
 		}
 	}
+	public List<Room> getRoomList() {
+		return roomList;
+	}
+	
 
 	// public void addToHistory(RoomCommand command) {
 	// history.add(command);

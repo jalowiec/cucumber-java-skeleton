@@ -46,8 +46,8 @@ public class HistorySteps {
 	}
 
 	
-	@Then("^each room points to a person booking it or is available$")
-	public void each_room_points_to_a_person_booking_it_or_is_available(List<Booking> bookingList) {
+	@Then("^the list of historical bookings displays names of people booking and time the booking was made or canceled$")
+	public void the_list_of_historical_bookings_displays_names_and_time(Person bookingPerson) {
 		
 		
 	}
