@@ -14,6 +14,7 @@ public class HotelManager {
 	private List<Room> lockedRooms = new CopyOnWriteArrayList<>();
 	private List<Person> personList = new ArrayList<>();
 	private List<Booking> bookingList = new ArrayList<>();
+	 
 
 	public void addRoom() {
 		Room addedRoom = new Room();
@@ -47,6 +48,8 @@ public class HotelManager {
 
 	public void bookingRoom(int bookingId, Person bookingPerson, Room bookingRoom) {
 		bookingRoom.setBooked();
+		RoomBooked roomBooked = (RoomBooked) bookingRoom.getState();
+		roomBooked.setBookingPerson(bookingPerson);
 		Operation operation = new Operation(RoomOperation.Reservation, bookingPerson);
 		bookingRoom.roomOperations.add(operation);
 		Booking booking = new Booking(bookingId, bookingPerson, bookingRoom);
@@ -130,23 +133,5 @@ public class HotelManager {
 	}
 	
 
-	// public void addToHistory(RoomCommand command) {
-	// history.add(command);
-	/// }
 
-	/*
-	 * public Room getRoom(int roomNumber) {
-	 * 
-	 * for(Room element : roomList) { if(element.getRoomNumber() == roomNumber)
-	 * return element;
-	 * 
-	 * } return null; }
-	 * 
-	 * public Person getPerson(int personId) {
-	 * 
-	 * for(Person element : personList) { if(element.getPersonId() == personId)
-	 * return element;
-	 * 
-	 * } return null; }
-	 */
 }

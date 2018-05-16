@@ -1,5 +1,6 @@
 package skeleton;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
@@ -16,7 +17,35 @@ public class HistorySteps {
 
 	
 	HotelManager hotel = new HotelManager();
+	Room room;
 	
+	@Given("^multiple people booked the same room$")
+	public void multiple_people_booked_the_same_room() {
+	
+		hotel.addRoom();
+		room = hotel.getFreeRoom();
+		hotel.bookingRoom(1, new Person(1, "Adam", "Nowak"), room);
+		hotel.cancelBooking(1);
+		room = hotel.getFreeRoom();
+		hotel.bookingRoom(2, new Person(3, "Kamil", "Bednarek"), room);
+		hotel.cancelBooking(2);
+		
+	}
+
+	@When("^a booking history is printed$")
+	public void a_booking_history_is_printed() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@Then("^the list of historical bookings displays names of people booking and time the booking was made or canceled$")
+	public void the_list_of_historical_bookings_displays_names_of_people_booking_and_time_the_booking_was_made_or_canceled() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+	
+	
+	/*
 
 	@Given("multiple people booked the same room")
 	public void multiple_people_booked_the_same_room(Room room) {
@@ -52,7 +81,7 @@ public class HistorySteps {
 		
 	}
 
-	
+*/	
 
 
 	
