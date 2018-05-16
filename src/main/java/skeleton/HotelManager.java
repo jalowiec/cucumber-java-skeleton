@@ -5,19 +5,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class HotelManager {
 
+	private int bookingId;
 	private List<Room> roomList = new ArrayList<>();
-	private List<Room> lockedRooms = new ArrayList<>();
+	private List<Room> lockedRooms = new CopyOnWriteArrayList<>();
 	private List<Person> personList = new ArrayList<>();
-	private Set<Booking> bookingList = new TreeSet<>();
+	private List<Booking> bookingList = new ArrayList<>();
 
 	public void addRoom() {
 		Room addedRoom = new Room();
 		roomList.add(addedRoom);
 	}
-
+//CHYBA DO USUNIECIA
 	public Room getAddedRoom() {
 		return roomList.get(roomList.size() - 1);
 	}
@@ -38,21 +40,33 @@ public class HotelManager {
 		bookingRoom.setBooked();
 		Operation operation = new Operation(RoomOperation.Reservation, bookingPerson);
 		bookingRoom.roomOperations.add(operation);
-		Booking booking = new Booking(bookingPerson, bookingRoom);
+		Booking booking = new Booking(bookingId++, bookingPerson, bookingRoom);
 		bookingList.add(booking);
 
 	}
 
-	public void bookingRoom(Person bookingPerson, Room bookingRoom) {
+	public void bookingRoom(int bookingId, Person bookingPerson, Room bookingRoom) {
 		bookingRoom.setBooked();
 		Operation operation = new Operation(RoomOperation.Reservation, bookingPerson);
 		bookingRoom.roomOperations.add(operation);
-		Booking booking = new Booking(bookingPerson, bookingRoom);
+		Booking booking = new Booking(bookingId, bookingPerson, bookingRoom);
 		bookingList.add(booking);
 
 	}
 
-	public void cancelBooking(Person cancelingPerson, Booking booking) {
+	// CO W TAKICH PRZYPADKACH ZWRACAC
+	public Booking getBookingFromList(int bookingId) {
+		
+		for(Booking booking : bookingList) {
+			if(booking.getBookingId() == bookingId)
+				return booking;
+		}
+		
+		return null;
+	}
+
+	public void cancelBooking(int bookingId) {
+		Booking booking = getBookingFromList(bookingId);
 		booking.getBookingRoom().setFree();
 		Operation operation = new Operation(RoomOperation.Cancellation, booking.getBookingPerson());
 		booking.getBookingRoom().roomOperations.add(operation);
@@ -102,7 +116,9 @@ public class HotelManager {
 			if (room.getState() instanceof RoomLocked) {
 				RoomLocked roomLocked = (RoomLocked) room.getState();
 				if (new Date().getTime() - roomLocked.getLockDate().getTime() > minutesAfterLock * 60000) {
+					lockedRooms.remove(room);
 					room.setFree();
+				    
 				}
 
 			}

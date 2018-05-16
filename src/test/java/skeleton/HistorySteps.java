@@ -27,13 +27,13 @@ public class HistorySteps {
 		hotel.addRoom();
 		Room addedRoom = hotel.getAddedRoom();
 		
-		hotel.bookingRoom(personA, addedRoom);		
+	//	hotel.bookingRoom(personA, addedRoom);		
 		hotel.cancelBooking(personA, addedRoom);
 		
-		hotel.bookingRoom(personB, addedRoom);		
+	//	hotel.bookingRoom(personB, addedRoom);		
 		hotel.cancelBooking(personB, addedRoom);
 		
-		hotel.bookingRoom(personC, addedRoom);		
+	//	hotel.bookingRoom(personC, addedRoom);		
 		hotel.cancelBooking(personC, addedRoom);
 		
 		

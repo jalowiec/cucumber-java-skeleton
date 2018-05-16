@@ -21,10 +21,10 @@ public class ListSteps {
 	@Given("there are a list of rooms with some bookings made")
 	public void there_are_a_list_of_rooms_with_some_bookings_made(Person bookingPerson) {
 		hotel.addRoom();
-		hotel.bookingRoom(bookingPerson, hotel.getAddedRoom());
+	//	hotel.bookingRoom(bookingPerson, hotel.getAddedRoom());
 		hotel.addRoom();
 		hotel.addRoom();
-		hotel.bookingRoom(bookingPerson, hotel.getAddedRoom());
+	//	hotel.bookingRoom(bookingPerson, hotel.getAddedRoom());
 		
 	}
 

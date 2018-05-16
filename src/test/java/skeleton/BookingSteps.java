@@ -23,7 +23,7 @@ public class BookingSteps {
 
 	@When("^person A books it$")
 	public void person_A_books_it(Person bookingPerson, Room bookingRoom) {
-		hotel.bookingRoom(bookingPerson, bookingRoom);	
+	//	hotel.bookingRoom(bookingPerson, bookingRoom);	
 	}
 
 	@Then("^it is booked by person A$")
