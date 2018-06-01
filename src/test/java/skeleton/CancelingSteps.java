@@ -15,7 +15,7 @@ public class CancelingSteps {
 
 	
 	HotelManager hotel = new HotelManager();
-	Person person = new Person(1, "Jan", "Kowalski");
+	Customer person = new Customer(1, "Jan", "Kowalski");
 	int bookingId = 100;
 	Room room;
 	Booking booking;

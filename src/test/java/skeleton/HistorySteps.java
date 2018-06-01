@@ -24,10 +24,10 @@ public class HistorySteps {
 	
 		hotel.addRoom();
 		room = hotel.getFreeRoom();
-		hotel.bookingRoom(1, new Person(1, "Adam", "Nowak"), room);
+		hotel.bookingRoom(1, new Customer(1, "Adam", "Nowak"), room);
 		hotel.cancelBooking(1);
 		room = hotel.getFreeRoom();
-		hotel.bookingRoom(2, new Person(3, "Kamil", "Bednarek"), room);
+		hotel.bookingRoom(2, new Customer(3, "Kamil", "Bednarek"), room);
 		hotel.cancelBooking(2);
 		
 	}

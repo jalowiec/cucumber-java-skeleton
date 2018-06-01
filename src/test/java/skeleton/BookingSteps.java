@@ -2,6 +2,7 @@ package skeleton;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import pl.edu.agh.to.booking.hotelProvider.HotelProvider;
 import cucumber.api.java.en.Then;
 
 import static org.junit.Assert.assertEquals;
@@ -13,8 +14,9 @@ import cucumber.api.java.en.And;
 public class BookingSteps {
 
 	
-	HotelManager hotel = new HotelManager();
-	Person bookingPerson = new Person(1, "Jan", "Kowalski");
+	Hotel hotel = HotelProvider.getExampleHotel();
+	
+	Customer bookingPerson = new Customer(1, "Jan", "Kowalski");
 	int bookingId = 100;
 	Room bookingRoom;
 	Booking booking;
@@ -33,7 +35,7 @@ public class BookingSteps {
 
 	@Then("^it is booked by person A$")
 	public void it_is_booked_by_person_A() {
-		assertEquals(bookingPerson, booking.getBookingPerson() );
+		assertEquals(bookingPerson, booking.getBookingCustomer() );
 	}
 
 	@Then("^it can no longer be booked$")

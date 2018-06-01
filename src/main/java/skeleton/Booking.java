@@ -3,14 +3,14 @@ package skeleton;
 public class Booking {
 	
 	private int bookingId;
-	private Person bookingPerson;
+	private Customer bookingCustomer;
 	private Room bookingRoom;
 	 
 	
-	public Booking(int bookingId, Person bookingPerson, Room bookingRoom) {
+	public Booking(int bookingId, Customer bookingCustomer, Room bookingRoom) {
 		super();
 		this.bookingId = bookingId;
-		this.bookingPerson = bookingPerson;
+		this.bookingCustomer = bookingCustomer;
 		this.bookingRoom = bookingRoom;
 	}
 
@@ -18,8 +18,8 @@ public class Booking {
 		return bookingId;
 	}
 	
-	public Person getBookingPerson() {
-		return bookingPerson;
+	public Customer getBookingCustomer() {
+		return bookingCustomer;
 	}
 
 	public Room getBookingRoom() {

@@ -23,11 +23,11 @@ public class ListSteps {
 	public void there_are_a_list_of_rooms_with_some_bookings_made() {
 		hotel.addRoom();
 		Room room = hotel.getFreeRoom();
-		hotel.bookingRoom(100, new Person(2, "Tadeusz", "Nowak"), room);
+		hotel.bookingRoom(100, new Customer(2, "Tadeusz", "Nowak"), room);
 		
 		hotel.addRoom();
 		room = hotel.getFreeRoom();
-		hotel.bookingRoom(101, new Person(3, "Robert", "Lewandowski"), room);
+		hotel.bookingRoom(101, new Customer(3, "Robert", "Lewandowski"), room);
 		
 		hotel.addRoom();
 		hotel.addRoom();

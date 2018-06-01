@@ -4,14 +4,14 @@ package skeleton;
 public class RoomBooked implements RoomState {
 	
 
-	Person bookingPerson;
+	Customer bookingCustomer;
 
-	public Person getBookingPerson() {
-		return bookingPerson;
+	public Customer getBookingCustomer() {
+		return bookingCustomer;
 	}
 
-	public void setBookingPerson(Person bookingPerson) {
-		this.bookingPerson = bookingPerson;
+	public void setBookingCustomer(Customer bookingCustomer) {
+		this.bookingCustomer = bookingCustomer;
 	}
 	
 

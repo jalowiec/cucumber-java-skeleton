@@ -12,7 +12,7 @@ public class HotelManager {
 	private int bookingId;
 	private List<Room> roomList = new ArrayList<>();
 	private List<Room> lockedRooms = new CopyOnWriteArrayList<>();
-	private List<Person> personList = new ArrayList<>();
+	private List<Customer> CustomerList = new ArrayList<>();
 	private List<Booking> bookingList = new ArrayList<>();
 	 
 
@@ -36,23 +36,23 @@ public class HotelManager {
 	}
 	// TO DO - obsluzyc sytuacje jak nie bedzie wolnego pokoju
 
-	public void bookingAddedRoom(Person bookingPerson) {
+	public void bookingAddedRoom(Customer bookingCustomer) {
 		Room bookingRoom = getAddedRoom();
 		bookingRoom.setBooked();
-		Operation operation = new Operation(RoomOperation.Reservation, bookingPerson);
+		Operation operation = new Operation(RoomOperation.Reservation, bookingCustomer);
 		bookingRoom.roomOperations.add(operation);
-		Booking booking = new Booking(bookingId++, bookingPerson, bookingRoom);
+		Booking booking = new Booking(bookingId++, bookingCustomer, bookingRoom);
 		bookingList.add(booking);
 
 	}
 
-	public void bookingRoom(int bookingId, Person bookingPerson, Room bookingRoom) {
+	public void bookingRoom(int bookingId, Customer bookingCustomer, Room bookingRoom) {
 		bookingRoom.setBooked();
 		RoomBooked roomBooked = (RoomBooked) bookingRoom.getState();
-		roomBooked.setBookingPerson(bookingPerson);
-		Operation operation = new Operation(RoomOperation.Reservation, bookingPerson);
+		roomBooked.setBookingCustomer(bookingCustomer);
+		Operation operation = new Operation(RoomOperation.Reservation, bookingCustomer);
 		bookingRoom.roomOperations.add(operation);
-		Booking booking = new Booking(bookingId, bookingPerson, bookingRoom);
+		Booking booking = new Booking(bookingId, bookingCustomer, bookingRoom);
 		bookingList.add(booking);
 
 	}
@@ -71,13 +71,13 @@ public class HotelManager {
 	public void cancelBooking(int bookingId) {
 		Booking booking = getBookingFromList(bookingId);
 		booking.getBookingRoom().setFree();
-		Operation operation = new Operation(RoomOperation.Cancellation, booking.getBookingPerson());
+		Operation operation = new Operation(RoomOperation.Cancellation, booking.getBookingCustomer());
 		booking.getBookingRoom().roomOperations.add(operation);
 		bookingList.remove(booking);
 
 	}
 
-	public void cancelBooking(Person cancelingPerson, Room room) {
+	public void cancelBooking(Customer cancelingCustomer, Room room) {
 		room.setFree();
 		for (Booking booking : bookingList) {
 			if (booking.getBookingRoom().equals(room)) {
@@ -95,20 +95,20 @@ public class HotelManager {
 
 	public void showBookings() {
 		for (Booking booking : bookingList) {
-			System.out.println(booking.getBookingPerson().getPersonId() + ", " + booking.getBookingPerson().getPersonName() + ", " + booking.getBookingPerson().getPersonSurname());
+			System.out.println(booking.getBookingCustomer().getCustomerId() + ", " + booking.getBookingCustomer().getCustomerName() + ", " + booking.getBookingCustomer().getCustomerSurname());
 		}
 
 	}
 
 	public void showHistory(Room room) {
 		for (Booking booking : bookingList) {
-			System.out.println(booking.getBookingPerson().getPersonId());
+			System.out.println(booking.getBookingCustomer().getCustomerId());
 		}
 
 	}
 
-	public void addPerson(int personId, String personName, String personSurname) {
-		personList.add(new Person(personId, personName, personSurname));
+	public void addCustomer(int CustomerId, String CustomerName, String CustomerSurname) {
+		CustomerList.add(new Customer(CustomerId, CustomerName, CustomerSurname));
 		// TODO - obs³uga podwojnego dodawania osoby
 	}
 
