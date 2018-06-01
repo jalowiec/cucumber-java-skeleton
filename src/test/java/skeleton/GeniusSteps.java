@@ -11,7 +11,6 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 
 public class GeniusSteps {
-
 	
 	@Given("^there is a room locked by a non-genius customer$")
 	public void there_is_a_room_locked_by_a_non_genius_customer() {
