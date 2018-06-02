@@ -9,83 +9,64 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class HotelManager {
 
-	private int bookingId;
-	private List<Room> roomList = new ArrayList<>();
-	private List<Room> lockedRooms = new CopyOnWriteArrayList<>();
-	private List<Customer> CustomerList = new ArrayList<>();
-	private List<Booking> bookingList = new ArrayList<>();
-	 
-
-	public void addRoom() {
-		Room addedRoom = new Room();
-		roomList.add(addedRoom);
-	}
-//CHYBA DO USUNIECIA
-	public Room getAddedRoom() {
-		return roomList.get(roomList.size() - 1);
-	}
-
-	public Room getFreeRoom() {
-		for (Room room : roomList) {
+	public Room getFreeRoom(Hotel hotel) {
+		for (Room room : hotel.getRoomList()) {
 			if (room.getState() instanceof RoomFree) {
 				return room;
 			}
 		}
-		return null;
-
-	}
-	// TO DO - obsluzyc sytuacje jak nie bedzie wolnego pokoju
-
-	public void bookingAddedRoom(Customer bookingCustomer) {
-		Room bookingRoom = getAddedRoom();
-		bookingRoom.setBooked();
-		Operation operation = new Operation(RoomOperation.Reservation, bookingCustomer);
-		bookingRoom.roomOperations.add(operation);
-		Booking booking = new Booking(bookingId++, bookingCustomer, bookingRoom);
-		bookingList.add(booking);
+		return null; // CO TUTAJ ZRZUCAC JAK NIE MA WOLNEGO POKOJU
 
 	}
 
-	public void bookingRoom(int bookingId, Customer bookingCustomer, Room bookingRoom) {
+	public Booking bookingRoom(Customer bookingCustomer, Room bookingRoom, Hotel hotel) {
 		bookingRoom.setBooked();
 		RoomBooked roomBooked = (RoomBooked) bookingRoom.getState();
 		roomBooked.setBookingCustomer(bookingCustomer);
 		Operation operation = new Operation(RoomOperation.Reservation, bookingCustomer);
 		bookingRoom.roomOperations.add(operation);
-		Booking booking = new Booking(bookingId, bookingCustomer, bookingRoom);
-		bookingList.add(booking);
-
+		Booking booking = new Booking(bookingCustomer, bookingRoom);
+		hotel.bookingList.add(booking);
+		return booking;
 	}
 
-	// CO W TAKICH PRZYPADKACH ZWRACAC
-	public Booking getBookingFromList(int bookingId) {
-		
-		for(Booking booking : bookingList) {
-			if(booking.getBookingId() == bookingId)
-				return booking;
-		}
-		
-		return null;
-	}
-
-	public void cancelBooking(int bookingId) {
-		Booking booking = getBookingFromList(bookingId);
-		booking.getBookingRoom().setFree();
-		Operation operation = new Operation(RoomOperation.Cancellation, booking.getBookingCustomer());
-		booking.getBookingRoom().roomOperations.add(operation);
-		bookingList.remove(booking);
-
-	}
-
-	public void cancelBooking(Customer cancelingCustomer, Room room) {
-		room.setFree();
-		for (Booking booking : bookingList) {
-			if (booking.getBookingRoom().equals(room)) {
-				bookingList.remove(booking);
+	public void cancelBooking(Booking booking, Hotel hotel) {
+		for (Booking bookingInList : hotel.getBookingList()) {
+			if (booking.equals(bookingInList)) {
+				booking.getBookingRoom().setFree();
+				Operation operation = new Operation(RoomOperation.Cancellation, booking.getBookingCustomer());
+				booking.getBookingRoom().roomOperations.add(operation);
+				hotel.getBookingList().remove(booking);
+				System.out.println("USUNIECIE BOOKINGGU3");
+				
 			}
+
+		}
+	}
+	
+	public void lockingRoom(Customer bookingCustomer, Room room, Hotel hotel) {
+		room.setLocked();
+		RoomLocked roomLocked = (RoomLocked) room.getState();
+//		roomLock.setBookingCustomer(bookingCustomer);
+//		Operation operation = new Operation(RoomOperation.Reservation, bookingCustomer);
+//		bookingRoom.roomOperations.add(operation);
+//		Booking booking = new Booking(bookingCustomer, bookingRoom);
+//		hotel.bookingList.add(booking);
+//		return booking;
+	}
+
+	
+/*
+	
+	public Booking getBooking(Hotel hotel) {
+		System.out.println("GET BOOKING");
+		for (Booking booking : hotel.getBookingList()) {
+			System.out.println(booking.getBookingId());
 		}
 
+		return hotel.getBookingList().get(0);
 	}
+	
 
 	public void lockingRoom(Room room) {
 		room.setLocked();
@@ -95,7 +76,9 @@ public class HotelManager {
 
 	public void showBookings() {
 		for (Booking booking : bookingList) {
-			System.out.println(booking.getBookingCustomer().getCustomerId() + ", " + booking.getBookingCustomer().getCustomerName() + ", " + booking.getBookingCustomer().getCustomerSurname());
+			System.out.println(
+					booking.getBookingCustomer().getCustomerId() + ", " + booking.getBookingCustomer().getCustomerName()
+							+ ", " + booking.getBookingCustomer().getCustomerSurname());
 		}
 
 	}
@@ -114,24 +97,23 @@ public class HotelManager {
 
 	public void cancelingLockedRooms(int minutesAfterLock) {
 
-	
 		for (Room room : lockedRooms) {
 			if (room.getState() instanceof RoomLocked) {
 				RoomLocked roomLocked = (RoomLocked) room.getState();
 				if (new Date().getTime() - roomLocked.getLockDate().getTime() > minutesAfterLock * 60000) {
 					lockedRooms.remove(room);
 					room.setFree();
-				    
+
 				}
 
 			}
 
 		}
 	}
+
 	public List<Room> getRoomList() {
 		return roomList;
 	}
+*/
 	
-
-
 }

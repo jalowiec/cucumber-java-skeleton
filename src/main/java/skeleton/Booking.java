@@ -2,14 +2,15 @@ package skeleton;
 
 public class Booking {
 	
-	private int bookingId;
+	private static int bookingIdGenerator;
+	private final int bookingId;
 	private Customer bookingCustomer;
 	private Room bookingRoom;
 	 
 	
-	public Booking(int bookingId, Customer bookingCustomer, Room bookingRoom) {
+	public Booking(Customer bookingCustomer, Room bookingRoom) {
 		super();
-		this.bookingId = bookingId;
+		this.bookingId = bookingIdGenerator++;
 		this.bookingCustomer = bookingCustomer;
 		this.bookingRoom = bookingRoom;
 	}

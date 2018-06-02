@@ -16,19 +16,13 @@ import java.util.List;
 public class HistorySteps {
 
 	
-	HotelManager hotel = new HotelManager();
+	
 	Room room;
 	
 	@Given("^multiple people booked the same room$")
 	public void multiple_people_booked_the_same_room() {
 	
-		hotel.addRoom();
-		room = hotel.getFreeRoom();
-		hotel.bookingRoom(1, new Customer(1, "Adam", "Nowak"), room);
-		hotel.cancelBooking(1);
-		room = hotel.getFreeRoom();
-		hotel.bookingRoom(2, new Customer(3, "Kamil", "Bednarek"), room);
-		hotel.cancelBooking(2);
+	
 		
 	}
 

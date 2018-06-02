@@ -2,6 +2,7 @@ package skeleton;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import pl.edu.agh.to.booking.hotelProvider.HotelProvider;
 import cucumber.api.java.en.Then;
 
 import static org.junit.Assert.assertEquals;
@@ -14,30 +15,23 @@ import java.util.List;
 
 public class ListSteps {
 
-	
-	HotelManager hotel = new HotelManager();
-	List<Room> roomList;
+	HotelManager hotelManager = HotelProvider.getExampleHotelManager();
+	Hotel hotel = HotelProvider.getExampleHotel();
+
+	Room bookingRoom;
+	Customer bookingCustomer;
+	Booking booking;
 	
 
 	@Given("there are a list of rooms with some bookings made")
 	public void there_are_a_list_of_rooms_with_some_bookings_made() {
-		hotel.addRoom();
-		Room room = hotel.getFreeRoom();
-		hotel.bookingRoom(100, new Customer(2, "Tadeusz", "Nowak"), room);
-		
-		hotel.addRoom();
-		room = hotel.getFreeRoom();
-		hotel.bookingRoom(101, new Customer(3, "Robert", "Lewandowski"), room);
-		
-		hotel.addRoom();
-		hotel.addRoom();
+	
 		
 	}
 
 	@When("^the list of bookings is displayed$")
 	public void the_list_of_bookings_is_displayed() {
-		roomList = hotel.getRoomList();
-		// COS WIECEJ?
+	
 		
 	}
 	@Then("^each room points to a person booking it or is available$")

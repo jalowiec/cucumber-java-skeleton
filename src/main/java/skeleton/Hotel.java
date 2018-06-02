@@ -2,13 +2,14 @@ package skeleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Hotel {
 	
 	List<Customer> customerList = new ArrayList<>();
 	List<Room> roomList = new ArrayList<>();
-	List<Booking> bookingList = new ArrayList<>();
-	
+	List<Booking> bookingList = new CopyOnWriteArrayList<>();
+		
 	public List<Customer> getCustomerList() {
 		return customerList;
 	}

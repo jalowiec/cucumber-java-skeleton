@@ -2,14 +2,17 @@ package skeleton;
 
 public class Customer {
 	
-	private int customerId;
+	private static int customerIdGenerator;
+	private final int customerId;
 	private String customerName;
 	private String customerSurname;
-	public Customer(int customerId, String customerName, String customerSurname) {
+	private boolean isRegular;
+	public Customer(String customerName, String customerSurname) {
 		
-		this.customerId = customerId;
+		this.customerId = customerIdGenerator++;
 		this.customerName = customerName;
 		this.customerSurname = customerSurname;
+		System.out.println("utworzono:" + this.customerId + " " + this.customerName + " " + this.customerSurname + " " + this.isRegular);
 	}
 	public int getCustomerId() {
 		return customerId;
