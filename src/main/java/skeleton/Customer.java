@@ -12,7 +12,7 @@ public class Customer {
 		this.customerId = customerIdGenerator++;
 		this.customerName = customerName;
 		this.customerSurname = customerSurname;
-		System.out.println("utworzono:" + this.customerId + " " + this.customerName + " " + this.customerSurname + " " + this.isRegular);
+
 	}
 	public int getCustomerId() {
 		return customerId;

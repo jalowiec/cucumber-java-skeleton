@@ -13,8 +13,6 @@ public class Room {
 	public Room() {
 		this.roomNumber = ++roomNumberGenerator;
 		this.setFree();
-		System.out.println("utworzono pokoj nr: " + this.roomNumber );
-
 	}
 
 	public void setFree() {
@@ -56,5 +54,10 @@ public class Room {
 		return false;
 
 	}
+
+	public List<Operation> getRoomOperations() {
+		return roomOperations;
+	}
+	
 
 }

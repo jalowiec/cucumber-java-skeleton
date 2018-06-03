@@ -14,26 +14,25 @@ import cucumber.api.java.en.And;
 
 public class BookingSteps {
 
-	HotelManager hotelManager = HotelProvider.getExampleHotelManager();
 	Hotel hotel = HotelProvider.getExampleHotel();
-
+	HotelManager hotelManager = HotelProvider.getExampleHotelManager(hotel);
 	Room bookingRoom;
-	Customer bookingCustomer = HotelProvider.getExampleCustomer();
-	Booking booking;
+	Customer bookingCustomer = HotelProvider.getCustomerFromList(0);
 
 	@Given("^there is a free room$")
 	public void there_is_a_free_room() {
-		bookingRoom = hotelManager.getFreeRoom(hotel);
+		bookingRoom = hotelManager.getFreeRoom();
 	}
 
 	@When("^person A books it$")
 	public void person_A_books_it() {
-		booking = hotelManager.bookingRoom(bookingCustomer, bookingRoom, hotel);
+		hotelManager.bookingRoom(bookingCustomer, bookingRoom);
 	}
 
 	@Then("^it is booked by person A$")
 	public void it_is_booked_by_person_A() {
-		assertEquals(bookingCustomer, booking.getBookingCustomer());
+		RoomBooked roomBooked = (RoomBooked) bookingRoom.getState();
+		assertEquals(bookingCustomer, roomBooked.getBookingCustomer());
 	}
 
 	@Then("^it can no longer be booked$")
@@ -43,29 +42,23 @@ public class BookingSteps {
 	
 	@When("^a person begins to book that room$")
 	public void a_person_begins_to_book_that_room() {
-		hotelManager.lockingRoom(bookingCustomer, bookingRoom, hotel);
+		hotelManager.lockingRoom(bookingCustomer, bookingRoom);
 	}
 
 	@Then("^the room becomes unavailable$")
 	public void the_room_becomes_unavailable() {
-	    
-		assertFalse(bookingRoom.isFree());
-	
-	    
+		assertFalse(bookingRoom.isFree());    
 	}
 	
-
 	@Given("^person A has a booking$")
 	public void person_A_has_a_booking() {
-		bookingRoom = hotelManager.getFreeRoom(hotel);
-		booking = hotelManager.bookingRoom(bookingCustomer, bookingRoom, hotel);
-		bookingRoom = hotelManager.getFreeRoom(hotel);
-		booking = hotelManager.bookingRoom(bookingCustomer, bookingRoom, hotel);
+		bookingRoom = hotelManager.getFreeRoom();
+		hotelManager.bookingRoom(bookingCustomer, bookingRoom);
 	}
 
 	@When("^he cancels his booking$")
 	public void he_cancels_his_booking() {
-		hotelManager.cancelBooking(booking, hotel);
+		hotelManager.cancelBooking(bookingCustomer, bookingRoom);
 	}
 
 	@Then("^the room becomes free$")

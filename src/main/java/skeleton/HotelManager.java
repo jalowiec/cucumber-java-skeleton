@@ -9,7 +9,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class HotelManager {
 
-	public Room getFreeRoom(Hotel hotel) {
+	Hotel hotel;
+
+	public HotelManager(Hotel hotel) {
+		this.hotel = hotel;
+	}
+
+	public Room getFreeRoom() {
 		for (Room room : hotel.getRoomList()) {
 			if (room.getState() instanceof RoomFree) {
 				return room;
@@ -19,101 +25,101 @@ public class HotelManager {
 
 	}
 
-	public Booking bookingRoom(Customer bookingCustomer, Room bookingRoom, Hotel hotel) {
+	public void displayBookingList() {
+		for (Room room : hotel.getRoomList()) {
+			if (!room.isFree()) {
+				System.out.print("POKOJ " + room.getRoomNumber() + " ");
+				room.getState().stateInfo();
+			}
+		}
+
+	}
+
+	public void displayAvailableRooms() {
+		for (Room room : hotel.getRoomList()) {
+			if (room.isFree()) {
+				System.out.print("POKOJ " + room.getRoomNumber() + " ");
+				room.getState().stateInfo();
+			}
+		}
+	}
+
+	public void displayRoomHistory(Room room) {
+		for (Operation operation : room.getRoomOperations()) {
+			System.out.println(operation.getOperationDate() + " " + operation.getOperationType() + " "
+					+ operation.getOperationMaker().getCustomerName()  + " " 
+					+ operation.getOperationMaker().getCustomerSurname());
+		}
+	}
+
+	/// PODWOJNE ZABLOKOWANIE POKOJU
+
+	public void bookingRoom(Customer bookingCustomer, Room bookingRoom) {
 		bookingRoom.setBooked();
 		RoomBooked roomBooked = (RoomBooked) bookingRoom.getState();
 		roomBooked.setBookingCustomer(bookingCustomer);
-		Operation operation = new Operation(RoomOperation.Reservation, bookingCustomer);
-		bookingRoom.roomOperations.add(operation);
-		Booking booking = new Booking(bookingCustomer, bookingRoom);
-		hotel.bookingList.add(booking);
-		return booking;
+		bookingRoom.roomOperations.add(new Operation(RoomOperation.Reservation, bookingCustomer));
 	}
 
-	public void cancelBooking(Booking booking, Hotel hotel) {
-		for (Booking bookingInList : hotel.getBookingList()) {
-			if (booking.equals(bookingInList)) {
-				booking.getBookingRoom().setFree();
-				Operation operation = new Operation(RoomOperation.Cancellation, booking.getBookingCustomer());
-				booking.getBookingRoom().roomOperations.add(operation);
-				hotel.getBookingList().remove(booking);
-				System.out.println("USUNIECIE BOOKINGGU3");
-				
+	public void cancelBooking(Customer cancellingCustomer, Room cancellingRoom) {
+		for (Room room : hotel.getRoomList()) {
+			if (room.equals(cancellingRoom)) {
+				room.setFree();
+				room.roomOperations.add(new Operation(RoomOperation.Cancellation, cancellingCustomer));
 			}
 
 		}
 	}
-	
-	public void lockingRoom(Customer bookingCustomer, Room room, Hotel hotel) {
+
+	public void lockingRoom(Customer lockingCustomer, Room room) {
 		room.setLocked();
 		RoomLocked roomLocked = (RoomLocked) room.getState();
-//		roomLock.setBookingCustomer(bookingCustomer);
-//		Operation operation = new Operation(RoomOperation.Reservation, bookingCustomer);
-//		bookingRoom.roomOperations.add(operation);
-//		Booking booking = new Booking(bookingCustomer, bookingRoom);
-//		hotel.bookingList.add(booking);
-//		return booking;
-	}
-
-	
-/*
-	
-	public Booking getBooking(Hotel hotel) {
-		System.out.println("GET BOOKING");
-		for (Booking booking : hotel.getBookingList()) {
-			System.out.println(booking.getBookingId());
-		}
-
-		return hotel.getBookingList().get(0);
-	}
-	
-
-	public void lockingRoom(Room room) {
-		room.setLocked();
-		lockedRooms.add(room);
+		roomLocked.setLockingCustomer(lockingCustomer);
 
 	}
 
-	public void showBookings() {
-		for (Booking booking : bookingList) {
-			System.out.println(
-					booking.getBookingCustomer().getCustomerId() + ", " + booking.getBookingCustomer().getCustomerName()
-							+ ", " + booking.getBookingCustomer().getCustomerSurname());
-		}
+	/*
+	 * public Booking getBooking(Hotel hotel) { System.out.println("GET BOOKING");
+	 * for (Booking booking : hotel.getBookingList()) {
+	 * System.out.println(booking.getBookingId()); }
+	 * 
+	 * return hotel.getBookingList().get(0); }
+	 * 
+	 * 
+	 * public void lockingRoom(Room room) { room.setLocked(); lockedRooms.add(room);
+	 * 
+	 * }
+	 * 
+	 * public void showBookings() { for (Booking booking : bookingList) {
+	 * System.out.println( booking.getBookingCustomer().getCustomerId() + ", " +
+	 * booking.getBookingCustomer().getCustomerName() + ", " +
+	 * booking.getBookingCustomer().getCustomerSurname()); }
+	 * 
+	 * }
+	 * 
+	 * public void showHistory(Room room) { for (Booking booking : bookingList) {
+	 * System.out.println(booking.getBookingCustomer().getCustomerId()); }
+	 * 
+	 * }
+	 * 
+	 * public void addCustomer(int CustomerId, String CustomerName, String
+	 * CustomerSurname) { CustomerList.add(new Customer(CustomerId, CustomerName,
+	 * CustomerSurname)); // TODO - obs³uga podwojnego dodawania osoby }
+	 * 
+	 * public void cancelingLockedRooms(int minutesAfterLock) {
+	 * 
+	 * for (Room room : lockedRooms) { if (room.getState() instanceof RoomLocked) {
+	 * RoomLocked roomLocked = (RoomLocked) room.getState(); if (new
+	 * Date().getTime() - roomLocked.getLockDate().getTime() > minutesAfterLock *
+	 * 60000) { lockedRooms.remove(room); room.setFree();
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * } }
+	 * 
+	 * public List<Room> getRoomList() { return roomList; }
+	 */
 
-	}
-
-	public void showHistory(Room room) {
-		for (Booking booking : bookingList) {
-			System.out.println(booking.getBookingCustomer().getCustomerId());
-		}
-
-	}
-
-	public void addCustomer(int CustomerId, String CustomerName, String CustomerSurname) {
-		CustomerList.add(new Customer(CustomerId, CustomerName, CustomerSurname));
-		// TODO - obs³uga podwojnego dodawania osoby
-	}
-
-	public void cancelingLockedRooms(int minutesAfterLock) {
-
-		for (Room room : lockedRooms) {
-			if (room.getState() instanceof RoomLocked) {
-				RoomLocked roomLocked = (RoomLocked) room.getState();
-				if (new Date().getTime() - roomLocked.getLockDate().getTime() > minutesAfterLock * 60000) {
-					lockedRooms.remove(room);
-					room.setFree();
-
-				}
-
-			}
-
-		}
-	}
-
-	public List<Room> getRoomList() {
-		return roomList;
-	}
-*/
-	
 }

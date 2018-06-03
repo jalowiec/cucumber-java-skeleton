@@ -14,6 +14,19 @@ public class Operation {
 		this.operationMaker = operationMaker;
 		this.operationDate = new Date();
 	}
+
+	public RoomOperation getOperationType() {
+		return operationType;
+	}
+
+	public Customer getOperationMaker() {
+		return operationMaker;
+	}
+
+	public Date getOperationDate() {
+		return operationDate;
+	}
+
 	
 	
 	
