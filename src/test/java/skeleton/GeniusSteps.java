@@ -7,6 +7,7 @@ import cucumber.api.java.en.Then;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
@@ -35,7 +36,12 @@ public class GeniusSteps {
 	@Then("^the old customer cannot complete the booking$")
 	public void the_old_customer_cannot_complete_the_booking() {
 		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+				throw new PendingException();
+			}
+	@Then("^the room is locked$")
+	public void the_room_is_locked() {
+		// Write code here that turns the phrase above into concrete actions
+				throw new PendingException();
 	}
 
 	@When("^a genius user lists available rooms$")
@@ -46,14 +52,12 @@ public class GeniusSteps {
 
 	@Then("^this room is on that list$")
 	public void this_room_is_on_that_list() {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+		assertTrue(hotel.roomList.contains(lockingRoom));
 	}
 
-	@Then("^the room is locked$")
-	public void the_room_is_locked() {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
-	}
+	
+	
+
+	
 
 }

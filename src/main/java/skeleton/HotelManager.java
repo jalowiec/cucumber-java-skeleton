@@ -37,7 +37,7 @@ public class HotelManager {
 
 	public void displayAvailableRooms(Customer customer) {
 		for (Room room : hotel.getRoomList()) {
-			if (room.isFree() ) {
+			if (room.isFree() || (room.isLocked() && customer.isRegular())) {
 				System.out.print("POKOJ " + room.getRoomNumber() + " ");
 				room.getState().stateInfo();
 			}
