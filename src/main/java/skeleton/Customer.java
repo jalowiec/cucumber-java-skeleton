@@ -24,6 +24,14 @@ public class Customer {
 		return customerSurname;
 	}
 	
+	public boolean isRegular() {
+		return isRegular;
+	}
+	public void setRegular(boolean isRegular) {
+		this.isRegular = isRegular;
+	}
+	
+	
 	
 	
 	

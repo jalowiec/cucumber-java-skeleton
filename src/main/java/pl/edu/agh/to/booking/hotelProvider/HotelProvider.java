@@ -7,13 +7,14 @@ import skeleton.Customer;
 import skeleton.Hotel;
 import skeleton.HotelManager;
 import skeleton.Room;
+import skeleton.RoomLocked;
 
 public class HotelProvider {
 
 	public static Hotel getExampleHotel() {
 		Hotel hotel = new Hotel();
 		hotel.setCustomerList(getExampleCustomers());
-		hotel.setRoomList(getExampleRooms());
+		hotel.setRoomList(getExampleRoomList());
 		return hotel;
 	}
 
@@ -31,7 +32,15 @@ public class HotelProvider {
 
 	}
 
-	public static List<Room> getExampleRooms() {
+	public static Room getLockedRoom() {
+		Room room = new Room();
+		room.setLocked();
+		RoomLocked roomLocked = (RoomLocked) room.getState();
+		roomLocked.setLockingCustomer(getCustomerFromList(0));
+		return room;
+	}
+	
+	public static List<Room> getExampleRoomList() {
 		List<Room> roomList = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			roomList.add(new Room());
@@ -51,5 +60,23 @@ public class HotelProvider {
 		List<Customer> list = getExampleCustomers();
 		return list.get(i);
 	}
+	
+	public static Customer setCustomerAsRegular(int i) {
+		List<Customer> list = getExampleCustomers();
+		list.get(i).setRegular(true);
+		return list.get(i);
+	}
+	
+	public static Customer getRegularCustomer() {
+		List<Customer> list = getExampleCustomers();
+		for(Customer customer : list) {
+			if(customer.isRegular()) {
+				return customer;
+			}
+		}
+		
+		return null;
+	}
 
 }
+

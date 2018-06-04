@@ -35,9 +35,9 @@ public class HotelManager {
 
 	}
 
-	public void displayAvailableRooms() {
+	public void displayAvailableRooms(Customer customer) {
 		for (Room room : hotel.getRoomList()) {
-			if (room.isFree()) {
+			if (room.isFree() ) {
 				System.out.print("POKOJ " + room.getRoomNumber() + " ");
 				room.getState().stateInfo();
 			}

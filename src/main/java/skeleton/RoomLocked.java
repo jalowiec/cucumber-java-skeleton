@@ -27,7 +27,7 @@ public class RoomLocked implements RoomState {
 
 	@Override
 	public void stateInfo() {
-		System.out.println("W TRAKCIE REZERWACJI");
+		System.out.println("W TRAKCIE REZERWACJI PRZEZ: " + lockingCustomer.getCustomerName() + " " + lockingCustomer.getCustomerSurname());
 
 	}
 
