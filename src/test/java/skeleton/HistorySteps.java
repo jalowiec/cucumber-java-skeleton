@@ -18,21 +18,21 @@ public class HistorySteps {
 
 	Hotel hotel = HotelProvider.getExampleHotel();
 	HotelManager hotelManager = HotelProvider.getExampleHotelManager(hotel);
-	Room bookingRoom;
+	Room room;
 	
 	
 	@Given("^multiple people booked the same room$")
 	public void multiple_people_booked_the_same_room() {
-		bookingRoom = hotelManager.getFreeRoom();
-		hotelManager.bookingRoom(HotelProvider.getCustomerFromList(0), bookingRoom);
-		hotelManager.bookingRoom(HotelProvider.getCustomerFromList(1), bookingRoom);
-		hotelManager.cancelBooking(HotelProvider.getCustomerFromList(0), bookingRoom);
+		room = hotelManager.getFreeRoom();
+		hotelManager.bookingRoom(HotelProvider.getCustomerFromList(0), room);
+		hotelManager.bookingRoom(HotelProvider.getCustomerFromList(1), room);
+		hotelManager.cancelBooking(HotelProvider.getCustomerFromList(0), room);
 				
 	}
 
 	@When("^a booking history is printed$")
 	public void a_booking_history_is_printed() {
-	    hotelManager.displayRoomHistory(bookingRoom);
+	    hotelManager.displayRoomHistory(room);
 	}
 
 	@Then("^the list of historical bookings displays names of people booking and time the booking was made or canceled$")

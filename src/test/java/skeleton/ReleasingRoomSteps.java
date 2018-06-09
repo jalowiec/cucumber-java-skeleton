@@ -42,7 +42,7 @@ public class ReleasingRoomSteps {
 	}
 	@Then("^person A cannot complete booking$")
 	public void person_A_cannot_complete_booking() {
-		assertFalse(hotelManager.isCompleteBookingPossible(room));
+		assertFalse(hotelManager.isCompleteBookingPossible(customer, room));
 	}
 
 }

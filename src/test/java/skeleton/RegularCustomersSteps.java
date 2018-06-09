@@ -2,6 +2,7 @@ package skeleton;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import pl.edu.agh.to.booking.hotelProvider.HotelProvider;
 import cucumber.api.java.en.Then;
 
 import static org.junit.Assert.assertEquals;
@@ -12,10 +13,18 @@ import cucumber.api.java.en.And;
 
 public class RegularCustomersSteps {
 
+	Hotel hotel = HotelProvider.getExampleHotel();
+	HotelManager hotelManager = HotelProvider.getExampleHotelManager(hotel);
+	Room room;
+
 	@Given("^a customer has made at least (\\d+) bookings in the last (\\d+) months$")
 	public void a_customer_has_made_at_least_bookings_in_the_last_months(int arg1, int arg2) {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+
+		for (int i = 0; i <= arg1; i++) {
+			room = hotelManager.getFreeRoom();
+			hotelManager.bookingRoom(HotelProvider.getCustomerFromList(0), room);
+		}
+
 	}
 
 	@When("^he attempts to make a new booking$")

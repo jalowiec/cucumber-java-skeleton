@@ -33,7 +33,7 @@ public class GeniusSteps {
 
 	@Then("^the old customer cannot complete the booking$")
 	public void the_old_customer_cannot_complete_the_booking() {
-		assertFalse(hotelManager.isCompleteBookingPossible(lockingRoom));
+		assertFalse(hotelManager.isCompleteBookingPossible(customer, lockingRoom));
 	}
 
 	@Then("^the room is locked$")

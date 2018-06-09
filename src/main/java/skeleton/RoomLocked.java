@@ -24,6 +24,11 @@ public class RoomLocked implements RoomState {
 	public void setLockingCustomer(Customer lockingCustomer) {
 		this.lockingCustomer = lockingCustomer;
 	}
+	
+
+	public Customer getLockingCustomer() {
+		return lockingCustomer;
+	}
 
 	@Override
 	public void stateInfo() {

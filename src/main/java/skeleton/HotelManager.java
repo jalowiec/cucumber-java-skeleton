@@ -32,8 +32,6 @@ public class HotelManager {
 				room.getState().stateInfo();
 			}
 		}
-		System.out.println("--------");
-
 	}
 
 	public void displayAvailableRooms(Customer customer) {
@@ -56,7 +54,7 @@ public class HotelManager {
 
 	public void bookingRoom(Customer customer, Room room) {
 		startBooking(customer, room);
-		if(isCompleteBookingPossible(room)) {
+		if(isCompleteBookingPossible(customer, room)) {
 			completeBooking(customer, room);
 		}
 	}
@@ -75,7 +73,16 @@ public class HotelManager {
 		room.roomOperations.add(new Operation(RoomOperation.Reservation, bookingCustomer));
 	}
 	
-	public boolean isCompleteBookingPossible(Room room) {
+	public boolean isCompleteBookingPossible(Customer customer, Room room) {
+		if(!room.isLocked()) {
+			return false;
+		}
+		if(room.getState() instanceof RoomLocked) {
+			RoomLocked roomLocked = (RoomLocked) room.getState();
+			if(!customer.equals(roomLocked.getLockingCustomer())){
+				return false;
+			}
+		}
 		
 		return true;
 	}
