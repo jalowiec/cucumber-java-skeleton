@@ -53,7 +53,7 @@ public class HotelProvider {
 		HotelManager hotelManager = getExampleHotelManager(hotel);
 		hotelManager.bookingRoom(hotel.getCustomerList().get(0), hotel.getRoomList().get(0));
 		hotelManager.bookingRoom(hotel.getCustomerList().get(1), hotel.getRoomList().get(1));
-		hotelManager.lockingRoom(hotel.getCustomerList().get(2), hotel.getRoomList().get(2));
+		hotelManager.startBooking(hotel.getCustomerList().get(2), hotel.getRoomList().get(2));
 	}
 
 	public static Customer getCustomerFromList(int i) {

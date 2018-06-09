@@ -32,6 +32,7 @@ public class HotelManager {
 				room.getState().stateInfo();
 			}
 		}
+		System.out.println("--------");
 
 	}
 
@@ -47,20 +48,40 @@ public class HotelManager {
 	public void displayRoomHistory(Room room) {
 		for (Operation operation : room.getRoomOperations()) {
 			System.out.println(operation.getOperationDate() + " " + operation.getOperationType() + " "
-					+ operation.getOperationMaker().getCustomerName()  + " " 
+					+ operation.getOperationMaker().getCustomerName() + " "
 					+ operation.getOperationMaker().getCustomerSurname());
 		}
 	}
 
-	/// PODWOJNE ZABLOKOWANIE POKOJU
 
-	public void bookingRoom(Customer bookingCustomer, Room bookingRoom) {
-		bookingRoom.setBooked();
-		RoomBooked roomBooked = (RoomBooked) bookingRoom.getState();
-		roomBooked.setBookingCustomer(bookingCustomer);
-		bookingRoom.roomOperations.add(new Operation(RoomOperation.Reservation, bookingCustomer));
+	public void bookingRoom(Customer customer, Room room) {
+		startBooking(customer, room);
+		if(isCompleteBookingPossible(room)) {
+			completeBooking(customer, room);
+		}
 	}
 
+	public void startBooking(Customer lockingCustomer, Room room) {
+		room.setLocked();
+		RoomLocked roomLocked = (RoomLocked) room.getState();
+		roomLocked.setLockingCustomer(lockingCustomer);
+
+	}
+	
+	public void completeBooking(Customer bookingCustomer, Room room) {
+		room.setBooked();
+		RoomBooked roomBooked = (RoomBooked) room.getState();
+		roomBooked.setBookingCustomer(bookingCustomer);
+		room.roomOperations.add(new Operation(RoomOperation.Reservation, bookingCustomer));
+	}
+	
+	public boolean isCompleteBookingPossible(Room room) {
+		
+		return true;
+	}
+	
+	
+	
 	public void cancelBooking(Customer cancellingCustomer, Room cancellingRoom) {
 		for (Room room : hotel.getRoomList()) {
 			if (room.equals(cancellingRoom)) {
@@ -71,55 +92,7 @@ public class HotelManager {
 		}
 	}
 
-	public void lockingRoom(Customer lockingCustomer, Room room) {
-		room.setLocked();
-		RoomLocked roomLocked = (RoomLocked) room.getState();
-		roomLocked.setLockingCustomer(lockingCustomer);
 
-	}
-
-	/*
-	 * public Booking getBooking(Hotel hotel) { System.out.println("GET BOOKING");
-	 * for (Booking booking : hotel.getBookingList()) {
-	 * System.out.println(booking.getBookingId()); }
-	 * 
-	 * return hotel.getBookingList().get(0); }
-	 * 
-	 * 
-	 * public void lockingRoom(Room room) { room.setLocked(); lockedRooms.add(room);
-	 * 
-	 * }
-	 * 
-	 * public void showBookings() { for (Booking booking : bookingList) {
-	 * System.out.println( booking.getBookingCustomer().getCustomerId() + ", " +
-	 * booking.getBookingCustomer().getCustomerName() + ", " +
-	 * booking.getBookingCustomer().getCustomerSurname()); }
-	 * 
-	 * }
-	 * 
-	 * public void showHistory(Room room) { for (Booking booking : bookingList) {
-	 * System.out.println(booking.getBookingCustomer().getCustomerId()); }
-	 * 
-	 * }
-	 * 
-	 * public void addCustomer(int CustomerId, String CustomerName, String
-	 * CustomerSurname) { CustomerList.add(new Customer(CustomerId, CustomerName,
-	 * CustomerSurname)); // TODO - obs³uga podwojnego dodawania osoby }
-	 * 
-	 * public void cancelingLockedRooms(int minutesAfterLock) {
-	 * 
-	 * for (Room room : lockedRooms) { if (room.getState() instanceof RoomLocked) {
-	 * RoomLocked roomLocked = (RoomLocked) room.getState(); if (new
-	 * Date().getTime() - roomLocked.getLockDate().getTime() > minutesAfterLock *
-	 * 60000) { lockedRooms.remove(room); room.setFree();
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * } }
-	 * 
-	 * public List<Room> getRoomList() { return roomList; }
-	 */
 
 }
+

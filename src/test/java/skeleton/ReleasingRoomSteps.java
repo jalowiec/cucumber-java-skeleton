@@ -2,6 +2,7 @@ package skeleton;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import pl.edu.agh.to.booking.hotelProvider.HotelProvider;
 import cucumber.api.java.en.Then;
 
 import static org.junit.Assert.assertEquals;
@@ -13,26 +14,25 @@ import cucumber.api.java.en.And;
 
 public class ReleasingRoomSteps {
 
-	HotelManager hotel = new HotelManager();
+	Hotel hotel = HotelProvider.getExampleHotel();
+	HotelManager hotelManager = HotelProvider.getExampleHotelManager(hotel);
 	Room room;
+	Customer customer = HotelProvider.getCustomerFromList(0);
 
 	@Given("^a person started booking$")
 	public void a_person_started_booking() {
-		hotel.addRoom();
-		room = hotel.getFreeRoom();
-		hotel.lockingRoom(room);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		room = hotelManager.getFreeRoom();
+		hotelManager.startBooking(customer, room);
 
 	}
 
 	@When("^(\\d+) minutes elapses and the booking is still not complete$")
 	public void minutes_elapses_and_the_booking_is_still_not_complete(int arg1) {
-		hotel.cancelingLockedRooms(arg1);
+		
+		hotelManager.cancelBooking(customer, room);
+		
+		// TO DO
 	}
 
 	@Then("^the room becomes available again$")
@@ -40,10 +40,9 @@ public class ReleasingRoomSteps {
 		assertTrue(room.isFree());
 				
 	}
-//DO ZASTANOWIENIA - co to znaczy ze nie moze dokonczyc rezerwacji
 	@Then("^person A cannot complete booking$")
 	public void person_A_cannot_complete_booking() {
-		assertFalse(room.isLocked());
+		assertFalse(hotelManager.isCompleteBookingPossible(room));
 	}
 
 }

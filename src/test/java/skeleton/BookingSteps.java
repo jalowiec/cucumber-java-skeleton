@@ -42,7 +42,7 @@ public class BookingSteps {
 	
 	@When("^a person begins to book that room$")
 	public void a_person_begins_to_book_that_room() {
-		hotelManager.lockingRoom(bookingCustomer, bookingRoom);
+		hotelManager.startBooking(bookingCustomer, bookingRoom);
 	}
 
 	@Then("^the room becomes unavailable$")
